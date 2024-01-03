@@ -8,6 +8,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'app.cash.paparazzi'
 apply plugin: "io.github.takahirom.roborazzi"
 apply plugin: 'com.vanniktech.maven.publish'
+apply plugin: 'maven-publish'
 
 android {
   resourcePrefix "cascade_"
