@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.SubMenu
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.Toolbar
@@ -35,11 +36,18 @@ class SampleActivity : AppCompatActivity() {
     val toolbar = findViewById<Toolbar>(R.id.toolbar)
     toolbar.inflateMenu(R.menu.toolbar)
 
+    val button = findViewById<Button>(R.id.btnClickMe)
+    button.setOnClickListener {
+      showCascadeMenu(it)
+    }
+
     val menuButton = toolbar.findViewById<View>(R.id.overflow_menu)
     showcaseMenuButton(toolbar, menuButton)
     menuButton.setOnClickListener {
       showCascadeMenu(anchor = menuButton)
     }
+
+
   }
 
   private fun showCascadeMenu(anchor: View) {

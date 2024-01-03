@@ -11,4 +11,12 @@
     android:layout_height="wrap_content"
     app:title="@string/app_name"
     app:titleTextColor="?attr/colorAccent" />
+
+  <Button
+    android:id="@+id/btnClickMe"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center_horizontal"
+    android:text="CLICK ME!"
+    />
 </FrameLayout>
