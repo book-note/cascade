@@ -36,13 +36,13 @@ import me.saket.cascade.internal.setCallback
 import java.lang.reflect.Method
 import java.util.Stack
 import kotlin.DeprecationLevel.ERROR
+import kotlin.math.ceil
 
 open class CascadePopupMenu @JvmOverloads constructor(
   private val context: Context,
   private val anchor: View,
   private var gravity: Int = Gravity.NO_GRAVITY,
   private val styler: Styler = Styler(),
-  private val fixedWidth: Int = context.dip(196),
   private val defStyleAttr: Int = android.R.style.Widget_Material_PopupMenu,
   private val backNavigator: CascadeBackNavigator = CascadeBackNavigator()
 ) {
@@ -53,6 +53,16 @@ open class CascadePopupMenu @JvmOverloads constructor(
   private val backstack = Stack<Menu>()
   private val themeAttrs get() = popup.themeAttrs
   private val sharedViewPool = RecycledViewPool()
+  private val popupMaxWidth: Int by lazy {
+    context.dip(280)
+  }
+  private val popupMinWidth: Int by lazy {
+    context.dip(112)
+  }
+  private val popupWidthUnit: Int by lazy {
+    context.dip(56)
+  }
+  private var popupWidth = 0
 
   private var menuListRecyclerView: RecyclerView? = null
   private var cascadeMenuAdapter: Adapter<ViewHolder>? = null
@@ -123,16 +133,43 @@ open class CascadePopupMenu @JvmOverloads constructor(
     // PopupWindow moves the popup to align with the anchor if a fixed width
     // is known before hand. Note to self: If fixedWidth ever needs to be
     // removed, copy over MenuPopup.measureIndividualMenuWidth().
-    popup.width = fixedWidth
+    popup.width = measureMenuSizeAndGetWidth(cascadeMenuAdapter)
     popup.height = measureHeightOfChildrenCompat(maxHeight) + context.dip(4) // Doesn't work on API 21 without this.
 
     popup.showAsDropDown(anchor, 0, 0, gravity)
   }
 
+  private fun measureMenuSizeAndGetWidth(adapter: Adapter<ViewHolder>?): Int {
+    popupWidth = popupMinWidth
+    if (adapter == null) {
+      return popupWidth
+    }
+    val parent = FrameLayout(context)
+    val widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+    val heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+    val count = adapter.itemCount
+    for (i in 0 until count) {
+      val positionType = adapter.getItemViewType(i)
+
+      val vh = adapter.createViewHolder(parent, positionType)
+      adapter.bindViewHolder(vh, i)
+      val itemView = vh.itemView
+      itemView.measure(widthMeasureSpec, heightMeasureSpec)
+
+      val itemWidth = itemView.measuredWidth
+      if (itemWidth >= popupMaxWidth) {
+        return popupMaxWidth
+      } else if (itemWidth > popupWidth) {
+        popupWidth = itemWidth
+      }
+    }
+    popupWidth = ceil(popupWidth.toDouble() / popupWidthUnit).toInt() * popupWidthUnit
+    return popupWidth
+  }
 
   private fun measureHeightOfChildrenCompat(maxHeight: Int): Int {
     val parent = FrameLayout(context)
-    val widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(fixedWidth, View.MeasureSpec.EXACTLY)
+    val widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(popupWidth, View.MeasureSpec.EXACTLY)
 
     // Include the padding of the list
     var returnedHeight = 0
