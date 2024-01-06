@@ -109,7 +109,9 @@ class MenuItemViewHolder(private val view: ListMenuItemView) : RecyclerView.View
   companion object {
     fun inflate(parent: ViewGroup): MenuItemViewHolder {
       val inflater = LayoutInflater.from(parent.context).cloneInContext(parent.context)
-      val view = inflater.inflate(appcompatR.layout.abc_popup_menu_item_layout, parent, false)
+      val view = inflater.inflate(appcompatR.layout.abc_popup_menu_item_layout, parent, false).apply {
+        minimumWidth = context.dip(112)
+      }
       return MenuItemViewHolder(view as ListMenuItemView)
     }
   }

@@ -64,7 +64,9 @@ class MenuHeaderViewHolder(private val view: View) : RecyclerView.ViewHolder(vie
   companion object {
     fun inflate(parent: ViewGroup): MenuHeaderViewHolder {
       val inflater = LayoutInflater.from(parent.context).cloneInContext(parent.context)
-      val view = inflater.inflate(appcompatR.layout.abc_popup_menu_header_item_layout, parent, false)
+      val view = inflater.inflate(appcompatR.layout.abc_popup_menu_header_item_layout, parent, false).apply {
+        minimumWidth = context.dip(112)
+      }
       return MenuHeaderViewHolder(view)
     }
   }
