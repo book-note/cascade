@@ -20,6 +20,7 @@ import androidx.core.content.res.use
 import androidx.core.view.updatePaddingRelative
 import androidx.core.widget.PopupWindowCompat
 import me.saket.cascade.internal.DrawableWrapperCompat
+import me.saket.cascade.internal.dip
 
 /**
  * Mimics [PopupMenu] by,
@@ -46,7 +47,7 @@ open class CascadePopupWindow @JvmOverloads constructor(
     setBackgroundDrawable(null)                 // Remove PopupWindow's default frame around the content.
     PopupWindowCompat.setOverlapAnchor(this, true)
 
-    elevation = themeAttrs.popupElevation
+    elevation = context.dip(4).toFloat()
     contentView = HeightAnimatableViewFlipper(context).apply {
       background = themeAttrs.popupBackground
       clipToOutline = true

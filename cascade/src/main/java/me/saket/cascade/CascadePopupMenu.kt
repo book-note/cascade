@@ -60,7 +60,7 @@ open class CascadePopupMenu @JvmOverloads constructor(
     context.dip(112)
   }
   private val popupWidthUnit: Int by lazy {
-    context.dip(56)
+    context.dip(68)
   }
   private var popupWidth = 0
 
