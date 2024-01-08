@@ -47,7 +47,7 @@ open class CascadePopupWindow @JvmOverloads constructor(
     setBackgroundDrawable(null)                 // Remove PopupWindow's default frame around the content.
     PopupWindowCompat.setOverlapAnchor(this, true)
 
-    elevation = context.dip(4).toFloat()
+    elevation = context.dip(2).toFloat()
     contentView = HeightAnimatableViewFlipper(context).apply {
       background = themeAttrs.popupBackground
       clipToOutline = true
