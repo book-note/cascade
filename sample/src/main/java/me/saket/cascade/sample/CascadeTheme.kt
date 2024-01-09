@@ -18,7 +18,7 @@ fun CascadeMaterialTheme(content: @Composable () -> Unit) {
   val colors = lightColorScheme(
     primary = Color(0xFFB5D2C3),
     background = Color(0xFFB5D2C3),
-    surface = Color(0xFFE5F0EB),
+    surface = Color.White,
     onSurface = Color(0xFF356859),
     onSurfaceVariant = Color(0xFF356859),
   )
