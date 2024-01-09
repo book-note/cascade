@@ -47,7 +47,7 @@ open class CascadePopupMenu @JvmOverloads constructor(
   private val backNavigator: CascadeBackNavigator = CascadeBackNavigator()
 ) {
   val menu: Menu get() = menuBuilder
-  val popup = CascadePopupWindow(context, defStyleAttr)
+  val popup = CascadePopupWindow(context, styler.popupElevation, defStyleAttr)
 
   internal var menuBuilder = MenuBuilder(context)
   private val backstack = Stack<Menu>()
@@ -99,7 +99,8 @@ open class CascadePopupMenu @JvmOverloads constructor(
     val background: () -> Drawable? = { null },
     val menuList: (RecyclerView) -> Unit = {},
     val menuTitle: (MenuHeaderViewHolder) -> Unit = {},
-    val menuItem: (MenuItemViewHolder) -> Unit = {}
+    val menuItem: (MenuItemViewHolder) -> Unit = {},
+    val popupElevation: Float = 0f,
   )
 
   init {

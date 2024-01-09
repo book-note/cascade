@@ -113,7 +113,8 @@ class SampleActivity : AppCompatActivity() {
         it.titleView.typeface = ResourcesCompat.getFont(this, R.font.work_sans_medium)
         it.setBackground(rippleDrawable())
         it.setGroupDividerColor(Color.parseColor("#BED9CF"))
-      }
+      },
+      popupElevation = 10f
     )
   }
 

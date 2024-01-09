@@ -34,6 +34,7 @@ import me.saket.cascade.internal.dip
 @Suppress("LeakingThis")
 open class CascadePopupWindow @JvmOverloads constructor(
   private val context: Context,
+  private val popupElevation: Float,
   private val defStyleRes: Int = android.R.style.Widget_Material_PopupMenu
 ) : PopupWindow(context, null, 0, defStyleRes) {
 
@@ -47,7 +48,7 @@ open class CascadePopupWindow @JvmOverloads constructor(
     setBackgroundDrawable(null)                 // Remove PopupWindow's default frame around the content.
     PopupWindowCompat.setOverlapAnchor(this, true)
 
-    elevation = context.dip(2).toFloat()
+    elevation = popupElevation
     contentView = HeightAnimatableViewFlipper(context).apply {
       background = themeAttrs.popupBackground
       clipToOutline = true
@@ -111,10 +112,9 @@ open class CascadePopupWindow @JvmOverloads constructor(
   }
 
   private fun resolveThemeAttrs(): ThemeAttributes {
-    val attrs = intArrayOf(popupBackground, popupElevation, listChoiceBackgroundIndicator)
+    val attrs = intArrayOf(popupBackground, listChoiceBackgroundIndicator)
     return context.obtainStyledAttributes(null, attrs, android.R.attr.popupMenuStyle, defStyleRes).use {
       ThemeAttributes(
-        popupElevation = it.getDimensionOrThrow(attrs.indexOf(popupElevation)),
         popupBackground = it.getDrawableOrThrow(attrs.indexOf(popupBackground)).trimPaddings(),
         touchFeedbackRes = it.getResourceIdOrThrow(attrs.indexOf(listChoiceBackgroundIndicator))
       )
@@ -123,7 +123,6 @@ open class CascadePopupWindow @JvmOverloads constructor(
 
   class ThemeAttributes(
     val popupBackground: Drawable,
-    @Px val popupElevation: Float,
     @DrawableRes val touchFeedbackRes: Int
   )
 }
