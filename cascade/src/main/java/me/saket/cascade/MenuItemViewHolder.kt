@@ -6,12 +6,14 @@ package me.saket.cascade
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.PaintDrawable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.Px
 import androidx.appcompat.view.menu.ListMenuItemView
@@ -35,7 +37,8 @@ class MenuItemViewHolder(private val view: ListMenuItemView) : RecyclerView.View
   val contentView: View = view.findViewById(appcompatR.id.content)
   val iconView: ImageView by lazy(NONE) { view.findViewById(appcompatR.id.icon) }
   val subMenuArrowView: ImageView = view.findViewById(appcompatR.id.submenuarrow)
-  val groupDividerView: View = view.findViewById(appcompatR.id.group_divider)      // Shown at the top of this item's layout.
+  val groupDividerView: View =
+    view.findViewById(appcompatR.id.group_divider)      // Shown at the top of this item's layout.
 
   lateinit var model: ItemModel
     private set
@@ -50,7 +53,7 @@ class MenuItemViewHolder(private val view: ListMenuItemView) : RecyclerView.View
     groupDividerView.updateMargin(top = 0, bottom = 0)
   }
 
-  fun render(model: ItemModel) {
+  fun render(model: ItemModel, styler: CascadePopupMenu.Styler) {
     this.model = model
 
     view.setForceShowIcon(true)
@@ -62,6 +65,10 @@ class MenuItemViewHolder(private val view: ListMenuItemView) : RecyclerView.View
     }
 
     subMenuArrowView.updateMargin(start = 0.dip)
+
+    iconView.layoutParams = LinearLayout.LayoutParams(styler.iconSize, styler.iconSize)
+    (iconView.parent as LinearLayout).gravity = Gravity.CENTER_VERTICAL
+
     setContentSpacing(
       start = if (model.item.icon != null) 12.dip else 14.dip,
       end = when {

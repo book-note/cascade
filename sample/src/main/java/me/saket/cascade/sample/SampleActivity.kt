@@ -54,9 +54,6 @@ class SampleActivity : AppCompatActivity() {
     val popupMenu = CascadePopupMenu(this, anchor, styler = cascadeMenuStyler())
     popupMenu.menu.apply {
       MenuCompat.setGroupDividerEnabled(this, true)
-
-      add("About").setIcon(R.drawable.ic_language_24)
-      add("Copy").setIcon(R.drawable.ic_file_copy_24)
       addSubMenu("Share").also {
         val addShareTargets = { sub: SubMenu ->
           sub.add("PDF")
@@ -114,7 +111,8 @@ class SampleActivity : AppCompatActivity() {
         it.setBackground(rippleDrawable())
         it.setGroupDividerColor(Color.parseColor("#BED9CF"))
       },
-      popupElevation = 10f
+      popupElevation = 10f,
+      iconSize = 20f.dip.toInt()
     )
   }
 

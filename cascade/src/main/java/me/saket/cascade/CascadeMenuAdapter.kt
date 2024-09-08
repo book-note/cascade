@@ -41,7 +41,7 @@ internal class CascadeMenuAdapter(
       }
 
       is MenuItemViewHolder -> {
-        holder.render(items[position] as ItemModel)
+        holder.render(items[position] as ItemModel, styler)
         styler.menuItem(holder)
       }
     }

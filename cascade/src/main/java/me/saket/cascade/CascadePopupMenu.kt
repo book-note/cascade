@@ -101,6 +101,7 @@ open class CascadePopupMenu @JvmOverloads constructor(
     val menuTitle: (MenuHeaderViewHolder) -> Unit = {},
     val menuItem: (MenuItemViewHolder) -> Unit = {},
     val popupElevation: Float = 0f,
+    val iconSize: Int = 0,
   )
 
   init {
